@@ -27,13 +27,15 @@ class Player():
         self.vel_y = 0
         self.jumeped = False
         self.direction = 0
+        # thuộc tính xác định có đang nhảy không
+        self.in_air = True
 
     def update(self):
         dx,dy=0,0
         walk_cooldown = 20
         #lay su kien 
         key = pygame.key.get_pressed()
-        if key[pygame.K_SPACE] and self.jumeped==False:
+        if key[pygame.K_SPACE] and self.jumeped==False and self.in_air == False:
             #đang ở dưới nhưng thật ra y đang max, nên âm là nhảy
             self.vel_y -= 15
             self.jumeped = True
@@ -65,9 +67,12 @@ class Player():
         if self.vel_y > 10:
             self.vel_y = 10
         dy+=self.vel_y
-
+        
+        self.in_air = True
         #kiem tra va cham
         for tile in self.world.tile_list:
+            if tile[1].colliderect(self.rect.x, self.rect.y + 1, self.width, self.height):
+                self.in_air = False
             if tile[1].colliderect(self.rect.x ,self.rect.y + dy,self.width,self.height):
                 if self.vel_y < 0:
                     dy = tile[1].bottom - self.rect.top
@@ -75,6 +80,7 @@ class Player():
                 elif self.vel_y >= 0:
                     dy = tile[1].top - self.rect.bottom
                     self.vel_y = 0
+
             if tile[1].colliderect(self.rect.x +dx ,self.rect.y ,self.width,self.height):
                 dx = 0
         if pygame.sprite.spritecollide(self, self.hazard_group, False):

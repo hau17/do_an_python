@@ -5,6 +5,7 @@ from pygame.locals import *
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT,FPS,TILE_SIZE
 from player import Player
 from world import World, world_data,hazard_group
+from button import Button
 pygame.init()
 TILE_SIZE = TILE_SIZE
 clock = pygame.time.Clock()
@@ -23,7 +24,7 @@ bg_img = pygame.transform.scale(bg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 world = World(world_data)
 player = Player(40, SCREEN_HEIGHT - 40- 70-100,world, hazard_group)
-
+restart_button = Button(SCREEN_WIDTH //2, SCREEN_HEIGHT //2, "assets/img/restart_btn.png")
 run = True
 while run:
     clock.tick(FPS)
@@ -41,8 +42,9 @@ while run:
         # screen.blit(text, (SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2))
     
         pygame.display.update()
-        pygame.time.delay(2000)  # Đợi 2 giây rồi thoát
-        run = False
+        # pygame.time.delay(2000)  # Đợi 2 giây rồi thoát
+        # run = False
+        restart_button.draw(screen)
 
     for event in pygame.event.get():
         if event.type == QUIT:
