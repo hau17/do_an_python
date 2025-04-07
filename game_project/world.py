@@ -5,14 +5,15 @@ from settings import TILE_SIZE
 
 from lava import Lava
 from enemy import Enemy
-# lava_group =pygame.sprite.Group()
-# enemy_group = pygame.sprite.Group()
-hazard_group = pygame.sprite.Group()
+from nextLevel import Nexlevel
+from levels import *
+enemy_group = pygame.sprite.Group()
+next_group = pygame.sprite.Group()
 class World():
     def __init__(self,data):
         self.tile_list=[]
-        dirt_img=pygame.image.load('assets/img/dirt.png')
-        dat_img = pygame.transform.scale(dirt_img, (TILE_SIZE, TILE_SIZE))
+        dat_img=pygame.image.load('assets/img/dirt.png')
+        dat_img = pygame.transform.scale(dat_img, (TILE_SIZE, TILE_SIZE))
         row_count = 0
         for row in data:
             col_count =0
@@ -24,17 +25,20 @@ class World():
                     self.tile_list.append((dat_img, img_rect))
                 if col==2:
                     lava= Lava(col_count*TILE_SIZE,row_count*TILE_SIZE)
-                    hazard_group.add(lava)
+                    enemy_group.add(lava)
                 if col==3:
                     enemy= Enemy(col_count*TILE_SIZE,row_count*TILE_SIZE)
-                    hazard_group.add(enemy)
+                    enemy_group.add(enemy)
+                if col==4:
+                    nextLevel = Nexlevel(col_count*TILE_SIZE,row_count*TILE_SIZE)
+                    next_group.add(nextLevel)
                 col_count+=1
             row_count+=1
     def draw(self, screen):
         for data in self.tile_list:
             screen.blit(data[0],data[1])
 world_data = [
-[2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 11, 11], 
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4], 
 [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
 [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
 [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1], 
