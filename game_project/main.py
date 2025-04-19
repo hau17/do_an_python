@@ -2,9 +2,9 @@ import pygame
 #goi event nhanh hon
 from pygame.locals import *
 # //fn bat dau tro choi
-from settings import SCREEN_WIDTH, SCREEN_HEIGHT,FPS,TILE_SIZE
+from settings import SCREEN_WIDTH, SCREEN_HEIGHT,FPS,TILE_SIZE,FONT_SCORE, SCORE, WHITE
 from player import Player
-from world import World, world_data,enemy_group,next_group
+from world import World, enemy_group,next_group, coin_group
 from button import Button
 from levels import level
 pygame.init()
@@ -28,6 +28,9 @@ level_group = pygame.sprite.Group()
 bg_img = pygame.image.load('assets/img/dark_bg.png')
 bg_img = pygame.transform.scale(bg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
+def draw_text(text):
+    img = FONT_SCORE.render(text, True,WHITE)
+    screen.blit(img, (20, 20))
 def load_level(cap):
     if cap < len(level):
         world = World(level[cap])
@@ -58,6 +61,7 @@ while run:
         enemy_group.update()
         enemy_group.draw(screen)
         next_group.draw(screen)
+        coin_group.draw(screen)
 
         player.update()
         player.draw(screen)
@@ -66,18 +70,11 @@ while run:
             if restart_button.draw(screen):
                 enemy_group.empty()
                 next_group.empty()
+                coin_group.empty(screen)
+
                 level_now = 0
                 world= load_level(level_now)
-                if world:
-                    player = Player(40, SCREEN_HEIGHT - 40- 70-100,world, enemy_group, next_group)
-                else:
-                    font = pygame.font.Font('assets/font/Pixellettersfull.ttf', 50)
-                    text = font.render("YOU WIN", True, (255, 255, 255))
-                    text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
-                    screen.blit(text, text_rect)
-                    pygame.display.update()
-                    pygame.time.delay(2000)
-                    run = False
+                player = Player(40, SCREEN_HEIGHT - 40- 70-100,world, enemy_group, next_group)
             if exit_button.draw(screen):
                 run = False
         if player.next_level:
@@ -87,6 +84,7 @@ while run:
             next_group.empty()
             world = load_level(level_now)
             player = Player(40, SCREEN_HEIGHT - 40 - 70 - 100, world, enemy_group, next_group)
+        draw_text("X" + str(SCORE))
     for event in pygame.event.get():
         if event.type == QUIT:
             run = False
