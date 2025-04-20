@@ -1,7 +1,8 @@
 import pygame
 from pygame.locals import *
 from settings import TILE_SIZE
-from world import World
+import settings
+from world import World, coin_group
 class Player():
     def __init__(self, x, y, world, enemy_group,next_group):
         self.reset(x, y, world, enemy_group,next_group)
@@ -34,6 +35,7 @@ class Player():
         # thuộc tính xác định có đang nhảy không
         self.in_air = True
     def update(self):
+        global SCORE
         self.next_level = False
         if self.alive == True:
             dx,dy=0,0
@@ -93,6 +95,8 @@ class Player():
                 self.image = pygame.transform.scale(pygame.image.load("assets/img/ghost.png"),(TILE_SIZE,TILE_SIZE))
             if pygame.sprite.spritecollide(self, self.next_group, False):
                 self.next_level = True
+            if pygame.sprite.spritecollide(self,coin_group,True):
+                settings.SCORE+=1
 
             #update vi tri nhan vat
             self.rect.x += dx

@@ -35,7 +35,10 @@ class World():
                     nextLevel = Nexlevel(col_count*TILE_SIZE,row_count*TILE_SIZE)
                     next_group.add(nextLevel)
                 if col==5:
-                    coin = Coin(col_count*TILE_SIZE,row_count*TILE_SIZE)
+                    center_x = col_count * TILE_SIZE + TILE_SIZE // 2
+                    center_y = row_count * TILE_SIZE + TILE_SIZE // 2
+                    coin = Coin(center_x, center_y)
+                # Thêm đối tượng Coin vào nhóm coin_group
                     coin_group.add(coin)
                 col_count+=1
             row_count+=1

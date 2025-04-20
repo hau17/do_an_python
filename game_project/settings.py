@@ -14,9 +14,4 @@ BLUE = (0, 0, 255)
 FONT = pygame.font.SysFont('Bauhaus 93', 70)
 FONT_SCORE = pygame.font.SysFont('Bauhaus 93', 30)
 
-# Game State
-GAME_OVER = 0
-MAIN_MENU = True
-LEVEL = 3
-MAX_LEVELS = 7
-SCORE = 0
+SCORE =0
