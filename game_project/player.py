@@ -18,7 +18,7 @@ class Player():
         self.next_level = False
         for i in range(1,5):
             image_right = pygame.image.load(f'assets/img/guy{i}.png')
-            image_right = pygame.transform.scale(image_right, (30, 70))
+            image_right = pygame.transform.scale(image_right, (30, 50))
             image_left = pygame.transform.flip(image_right, True, False)
             self.images_right.append(image_right)
             self.images_left.append(image_left)
@@ -95,6 +95,7 @@ class Player():
                 self.image = pygame.transform.scale(pygame.image.load("assets/img/ghost.png"),(TILE_SIZE,TILE_SIZE))
             if pygame.sprite.spritecollide(self, self.next_group, False):
                 self.next_level = True
+                # khi va cham voi coin 
             if pygame.sprite.spritecollide(self,coin_group,True):
                 settings.SCORE+=1
 

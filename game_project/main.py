@@ -15,11 +15,6 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) 
 #ten cua so game
 pygame.display.set_caption('Game wibu')
-# def draw_grid():
-# 	for line in range(0, 20):
-# 		pygame.draw.line(screen, (255, 255, 255), (0, line * TILE_SIZE), (SCREEN_WIDTH, line * TILE_SIZE))
-# 		pygame.draw.line(screen, (255, 255, 255), (line * TILE_SIZE, 0), (line * TILE_SIZE, SCREEN_HEIGHT))
-
 #menu chơi hoặc thoát
 menu =True
 #level ban đầu
@@ -66,6 +61,7 @@ while run:
         if restart_button.draw(screen):
             enemy_group.empty()
             next_group.empty()
+            coin_group.empty()
             level_now = 0
             world = load_level(level_now)
             player = Player(40, SCREEN_HEIGHT - 40 - 70 - 100, world, enemy_group, next_group)
@@ -89,6 +85,7 @@ while run:
             if restart_button.draw(screen):
                 enemy_group.empty()
                 next_group.empty()
+                coin_group.empty()
                 level_now = 0
                 world = load_level(level_now)
                 player = Player(40, SCREEN_HEIGHT - 40 - 70 - 100, world, enemy_group, next_group)
@@ -100,6 +97,7 @@ while run:
             player.next_level = False
             enemy_group.empty()
             next_group.empty()
+            coin_group.empty()
             if level_now >= len(level):  # Win condition
                 game_won = True  # Enter win state
             else:
